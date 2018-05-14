@@ -107,9 +107,6 @@ Variable* ConsistencyHandler::pickVariable()
     return vTmp;
 }
 
-/**
-   Some beautiful comments with flower and sun :D
- */
 void ConsistencyHandler::pushNewVariable(bool sigTrue, indDomLocal posV, Variable* var, bool count, bool newDec)
 {
     assert(propagateQueue.empty());
