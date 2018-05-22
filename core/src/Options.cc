@@ -45,7 +45,6 @@ bool saving = false;
 countTypes countSols = countTypes::no;
 variableHeuristic varHeuristic = variableHeuristic::domwdeg;
 verbose Verbose = verbose::low;
-bool SaveExpl = false;
 bool reduceDBOpt = true;
 bool keepBinary = true;
 }
@@ -63,10 +62,9 @@ bool Options::load_options(int& argc, char** argv, int& method)
         method = 3;
     else if (!strMethod.compare("-nld"))
         method = 4;
-    else if (!strMethod.compare("-ca")) {
-        Options::SaveExpl = true;
+    else if (!strMethod.compare("-ca"))
         method = 5;
-    } else if (!strMethod.compare("-infosCSP"))
+    else if (!strMethod.compare("-infosCSP"))
         method = 10;
     else
         return true;

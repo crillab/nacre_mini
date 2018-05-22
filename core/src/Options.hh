@@ -69,7 +69,6 @@ extern bool assign;
 extern bool saving;
 extern variableHeuristic varHeuristic;
 extern verbose Verbose;
-extern bool SaveExpl;
 extern bool reduceDBOpt;
 extern bool keepBinary;
 

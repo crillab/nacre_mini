@@ -84,10 +84,9 @@ public:
     /// Perform backtrack to @level on all variables and backtrackable contraints
     void backtrack(int level)
     {
-        if (Options::SaveExpl)
-            for (size_t i = 0, stop = Variable::vpExpl.size(); i < stop; ++i)
-                if (Variable::vpExpl[i].level > level)
-                    Variable::vpExpl[i].unlock();
+        for (size_t i = 0, stop = Variable::vpExpl.size(); i < stop; ++i)
+            if (Variable::vpExpl[i].level > level)
+                Variable::vpExpl[i].unlock();
 
         for (auto v : variables)
             v->backtrackToLevel(level);
