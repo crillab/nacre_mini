@@ -94,7 +94,7 @@ bool ConstraintElementVariable::propagate(int level, Variable* cur, vector<Varia
         Variable* var = getVariableFor(index->getOnlyValue());
         int before1 = var->domainCurSize;
         int before2 = result->domainCurSize;
-        if (var->keepOnlyValues(result, 0, level) || result->keepOnlyValues(var, 0, level))
+        if (var->keepOnlyValues(result, 0, level, this) || result->keepOnlyValues(var, 0, level, this))
             return true;
 
         if (before1 != var->domainCurSize)

@@ -79,7 +79,7 @@ public:
     {
         if (isSupport)
             for (size_t j = 0; j < listSize; ++j)
-                if (scope[j]->keepOnlyVarProp(tuples, j, 0))
+                if (scope[j]->keepOnlyVarProp(tuples, j, 0, this))
                     return true;
 
         return false;

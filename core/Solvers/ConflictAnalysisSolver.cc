@@ -66,6 +66,10 @@ int ConflictAnalysisSolver::search(int zeroing)
 
             learnt_clause.clear();
             learnt_clause = confAnalysis->analyse(c, AChandler->getDecisionLevel(), bjLevel, uniqVar);
+
+            if (learnt_clause.empty())
+                return 1;
+
             AChandler->cancelUntil(bjLevel);
 
             Constraint* ref = nullptr;
@@ -74,24 +78,15 @@ int ConflictAnalysisSolver::search(int zeroing)
 
             VP& vp = Variable::varProps[learnt_clause[0] >> 1];
 
-            if (uniqVar == 1 && learnt_clause.size() != 1) {
-                Variable* var = vp.toVar;
-                var->cleanDBU();
-                for (auto c : learnt_clause)
-                    var->domainBoolUtil[var->indVpToIndVpLocal(c >> 1)] = true;
-                var->delInDBU(AChandler->getDecisionLevel(), ref);
-                Stats::nbSupp += learnt_clause.size();
-                Stats::unitVar++;
-            } else {
-                if (learnt_clause.size() == 1)
-                    Stats::unit++;
+            if (learnt_clause.size() == 1)
+                Stats::unit++;
+                
+            if ((learnt_clause[0] & 1))
+                vp.toVar->removeAt(vp.posInVar, AChandler->getDecisionLevel(), ref);
+            else
+                vp.toVar->assignAt(vp.posInVar, AChandler->getDecisionLevel(), ref);
+            Stats::nbSupp++;
 
-                if ((learnt_clause[0] & 1))
-                    vp.toVar->removeAt(vp.posInVar, AChandler->getDecisionLevel(), ref);
-                else
-                    vp.toVar->assignAt(vp.posInVar, AChandler->getDecisionLevel(), ref);
-                Stats::nbSupp++;
-            }
             AChandler->addToQueue(vp.toVar);
 
             RefClause::claDecayActivity();
