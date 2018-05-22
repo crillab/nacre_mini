@@ -223,8 +223,7 @@ bool Variable::assignAt(indDomLocal index, int level, Constraint* ctr)
     for (int i = 1; i < domainCurSize; i++) {
         Variable::varProps[domValuesToVarProp(domainStart + i)].state = NEG;
 
-        if (Options::SaveExpl)
-            Variable::vpExpl[domValuesToVarProp(domainStart + i)].lock(ctr, level, ++gblOrder);
+        Variable::vpExpl[domValuesToVarProp(domainStart + i)].lock(ctr, level, ++gblOrder);
 
         if (Options::Verbose >= verbose::high)
             cerr << "¬" << domValuesToVarProp(domainStart + i) << " ";
@@ -233,8 +232,7 @@ bool Variable::assignAt(indDomLocal index, int level, Constraint* ctr)
     if (Options::Verbose >= verbose::high)
         cerr << endl;
 
-    if (Options::SaveExpl)
-        Variable::vpExpl[domValuesToVarProp(domainStart)].lock(ctr, level, ++gblOrder);
+    Variable::vpExpl[domValuesToVarProp(domainStart)].lock(ctr, level, ++gblOrder);
 
     Variable::varProps[ivpToAssign].state = POS;
 
@@ -275,8 +273,7 @@ bool Variable::removeAt(indDomLocal index, int level, Constraint* ctr)
         cerr << " ¬" << ivpToDel;
     }
 
-    if (Options::SaveExpl)
-        Variable::vpExpl[ivpToDel].lock(ctr, level, ++gblOrder);
+    Variable::vpExpl[ivpToDel].lock(ctr, level, ++gblOrder);
 
     Variable::varProps[ivpToDel].state = NEG;
 
@@ -310,8 +307,7 @@ bool Variable::removeAt(indDomLocal index, int level, Constraint* ctr)
     if (domainCurSize == 1) { // the last vp become assigned as consequence
         Variable::varProps[domValuesToVarProp(domainStart)].state = POS;
 
-        if (Options::SaveExpl)
-            Variable::vpExpl[domValuesToVarProp(domainStart)].lock(Domain::domCtr, level, ++gblOrder);
+        Variable::vpExpl[domValuesToVarProp(domainStart)].lock(Domain::domCtr, level, ++gblOrder);
 
         if (ctr == nullptr && level)
             wasPushed = lastPushed = true;
