@@ -91,7 +91,7 @@ private:
     bool reduceIndexDomain(std::vector<Variable*>& touched, int level)
     {
         int saveSize = index->domainCurSize;
-        for (int i = saveSize; i >= 0; --i) {
+        for (int i = saveSize - 1; i >= 0; --i) {
             int idvIndex = index->indDomLocalToIndVPLocal(i);
             assert(idvIndex >= 0 && idvIndex < (int)listSize);
             int sentinel = vectorSentinels[idvIndex];
@@ -121,7 +121,7 @@ private:
     bool reduceResultDomain(std::vector<Variable*>& touched, int level)
     {
         int saveSize = result->domainCurSize;
-        for (int i = saveSize; i >= 0; --i) {
+        for (int i = saveSize - 1; i >= 0; --i) {
             int idvResult = result->indDomLocalToIndVPLocal(i);
             int sentinel = resultSentinels[idvResult];
             if (sentinel == -1 || !index->isValidLocalVpInd(sentinel) || !getVariableFor(sentinel)->isValidValue(result->LocalDomIndToVal(idvResult)))
