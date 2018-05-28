@@ -50,15 +50,11 @@ void Constraint::getConflict(vector<unsigned>& cl)
             continue;
         curVar->caStamp = ConflictAnalysis::gblCaStamp;
 
-        if (curVar->isAssigned())
-            cl.push_back(curVar->indDomLocalToIndVP(0) << 1 | 1); // we put the positive value instead to have shorter explanation
-        else {
-            for (int i = curVar->domainCurSize; i < curVar->domainAfterInit; ++i) {
-                indVp tmp = curVar->indDomLocalToIndVP(i);
-                if (!Variable::vpExpl[tmp].level)
-                    break; // we break since the domain is ordered by decreasing levels
-                cl.push_back(tmp << 1); // positive because deleted value, see clauses.hh
-            }
+        for (int i = curVar->domainCurSize; i < curVar->domainAfterInit; ++i) {
+            indVp tmp = curVar->indDomLocalToIndVP(i);
+            if (!Variable::vpExpl[tmp].level)
+                break; // we break since the domain is ordered by decreasing levels
+            cl.push_back(tmp << 1); // positive because deleted value, see clauses.hh
         }
     }
 }
@@ -73,46 +69,25 @@ void Constraint::getReason(unsigned lit, Expl& litExpl, int level, set<std::pair
             continue;
         curVar->caStamp = ConflictAnalysis::gblCaStamp;
 
-        indVp ivp = curVar->indDomLocalToIndVP(0);
-        if (curVar->isAssigned() && litExpl.order > Variable::vpExpl[ivp].order) {
-            // if lit was assigned but not as a consequence consider only the positive to shorten reason
+        for (int i = curVar->domainCurSize; i < curVar->domainAfterInit; ++i) {
+            indVp ivp = curVar->indDomLocalToIndVP(i);
             Expl& curExpl = Variable::vpExpl[ivp];
 
+            if (litExpl.order < curExpl.order)
+                continue;
             if (!curExpl.level)
-                continue; //level 0 decision
+                break; // we break since the domain is ordered by decreasing levels
             else if (curExpl.level == level) {
                 if (Options::Verbose >= verbose::high)
-                    cerr << "cs+¬" << ivp << " ";
-                stack.insert(make_pair(ivp << 1 | 1, &curExpl)); // negative because assigned value, see clauses.hh
+                    cerr << "cs+" << ivp << " ";
+                stack.insert(make_pair(ivp << 1, &curExpl)); // positive because deleted value, see clauses.hh
             } else {
                 if (Variable::varProps[ivp].marked)
                     continue;
                 Variable::varProps[ivp].marked = true;
                 if (Options::Verbose >= verbose::high)
-                    cerr << "cc+¬" << ivp << " ";
-                cl.push_back(ivp << 1 | 1); // negative because assigned value, see clauses.hh
-            }
-        } else {
-            for (int i = curVar->domainCurSize; i < curVar->domainAfterInit; ++i) {
-                ivp = curVar->indDomLocalToIndVP(i);
-                Expl& curExpl = Variable::vpExpl[ivp];
-
-                if (litExpl.order < curExpl.order)
-                    continue;
-                if (!curExpl.level)
-                    break; // we break since the domain is ordered by decreasing levels
-                else if (curExpl.level == level) {
-                    if (Options::Verbose >= verbose::high)
-                        cerr << "cs+" << ivp << " ";
-                    stack.insert(make_pair(ivp << 1, &curExpl)); // positive because deleted value, see clauses.hh
-                } else {
-                    if (Variable::varProps[ivp].marked)
-                        continue;
-                    Variable::varProps[ivp].marked = true;
-                    if (Options::Verbose >= verbose::high)
-                        cerr << "cc+" << ivp << " ";
-                    cl.push_back(ivp << 1); // positive because deleted value, see clauses.hh
-                }
+                    cerr << "cc+" << ivp << " ";
+                cl.push_back(ivp << 1); // positive because deleted value, see clauses.hh
             }
         }
     }
