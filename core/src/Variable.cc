@@ -232,7 +232,9 @@ bool Variable::assignAt(indDomLocal index, int level, Constraint* ctr)
     if (Options::Verbose >= verbose::high)
         cerr << endl;
 
-    Variable::vpExpl[domValuesToVarProp(domainStart)].lock(ctr, level, ++gblOrder);
+    assert(useless ? true : Variable::vpExpl[domValuesToVarProp(domainStart)].level == -1);
+    if (!useless && Variable::vpExpl[domValuesToVarProp(domainStart)].level == -1)
+        Variable::vpExpl[domValuesToVarProp(domainStart)].lock(ctr, level, ++gblOrder);
 
     Variable::varProps[ivpToAssign].state = POS;
 

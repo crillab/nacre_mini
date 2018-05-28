@@ -63,9 +63,9 @@ bool ConsistencyHandler::init()
 
     for (auto v : problem->getVariables()) {
         if (v->getConsts().empty() || v->domainInitSize == 1) {
-            v->assignAt(0, 0);
             v->useless = true;
             Stats::uselessVars++;
+            v->assignAt(0, 0);
         } else
             addToQueue(v);
     }
