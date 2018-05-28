@@ -34,7 +34,7 @@ using namespace std;
 bool ConstraintWeightedSumEQ::propagate(int level, Variable* cur, vector<Variable*>& touched)
 {
     recomputeBounds();
-
+    
     if (limit < min || max < limit)
         return true;
 
@@ -116,7 +116,7 @@ bool ConstraintWeightedSumGE::propagate(int level, Variable* cur, vector<Variabl
             return false;
     }
 
-    for (int i = 0; i < leftmostPositiveCoefficientPosition; i++) {
+    for (int i = left; i < leftmostPositiveCoefficientPosition; i++) {
         Variable* var = scope[i];
         int sizeBefore = var->domainCurSize;
         if (sizeBefore == 1)
@@ -144,9 +144,9 @@ bool ConstraintWeightedSumGE::propagate(int level, Variable* cur, vector<Variabl
 bool ConstraintWeightedSumLE::propagate(int level, Variable* cur, vector<Variable*>& touched)
 {
     recomputeBounds();
-    if (min <= limit)
+    if (max <= limit)
         return false;
-    if (max > limit)
+    if (min > limit)
         return true;
 
     for (int i = right; i >= leftmostPositiveCoefficientPosition; i--) {
@@ -171,10 +171,10 @@ bool ConstraintWeightedSumLE::propagate(int level, Variable* cur, vector<Variabl
         max += var->getUpperBoundVal() * coeff;
 
         if (max <= limit)
-            return true;
+            return false;
     }
 
-    for (int i = 0; i < leftmostPositiveCoefficientPosition; i++) {
+    for (int i = left; i < leftmostPositiveCoefficientPosition; i++) {
         Variable* var = scope[i];
 
         int sizeBefore = var->domainCurSize;
@@ -196,7 +196,7 @@ bool ConstraintWeightedSumLE::propagate(int level, Variable* cur, vector<Variabl
         max += var->getLowerBoundVal() * coeff;
 
         if (max <= limit)
-            return true;
+            return false;
     }
 
     return false;

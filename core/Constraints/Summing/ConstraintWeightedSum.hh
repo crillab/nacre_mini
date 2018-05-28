@@ -115,10 +115,16 @@ public:
         , left(coefficients.size())
         , right(-1)
     {
-        size_t i = coefficients.size() - 1;
-        while (i != 0 && coefficients[i] > 0)
-            i--;
-        leftmostPositiveCoefficientPosition = i + 1;
+        size_t i = 0;
+        while(i < coefficients.size()) {
+            if(coefficients[i] < 0)
+                i++;
+            else
+                break;
+        }
+
+        leftmostPositiveCoefficientPosition = i;
+        assert(coefficients[leftmostPositiveCoefficientPosition] >= 0);
     };
 
     bool propagate(int level, Variable* cur, std::vector<Variable*>& touched);
