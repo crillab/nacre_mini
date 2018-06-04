@@ -124,7 +124,7 @@ public:
         }
 
         leftmostPositiveCoefficientPosition = i;
-        assert(coefficients[leftmostPositiveCoefficientPosition] >= 0);
+        assert(leftmostPositiveCoefficientPosition == (int)coefficients.size() || coefficients[leftmostPositiveCoefficientPosition] >= 0);
     };
 
     bool propagate(int level, Variable* cur, std::vector<Variable*>& touched);
