@@ -50,15 +50,17 @@ using namespace std;
 
 bool ConsistencyHandler::init()
 {
+    cout << "c NACRE 1.0.3" << endl;
+
     cleanQueue();
 
     if (Options::Verbose != verbose::no)
-        cerr << "c Init constraints...";
+        cout << "c Init constraints...";
     for (auto c : problem->getConstraints())
         if (c->init())
             return true;
     if (Options::Verbose != verbose::no)
-        cerr << "Done" << endl
+        cout << "Done" << endl
              << "c Arc consistency is performing...";
 
     for (auto v : problem->getVariables()) {
@@ -74,7 +76,7 @@ bool ConsistencyHandler::init()
         return true;
 
     if (Options::Verbose != verbose::no)
-        cerr << "Done" << endl
+        cout << "Done" << endl
              << "c Initialization done in " << InfoSystem::timeElapsed() << " seconds" << endl;
 
     if (Options::Verbose != verbose::no)

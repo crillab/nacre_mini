@@ -76,12 +76,11 @@ int GeneralizedCompleteSolver::search(int zeroing)
         } else if (curConflict >= rst.GetNbConflictAllowed()) // restart
         {
             if (Options::Verbose != verbose::no)
-                fprintf(stderr, "c | %6llu | %7d | %8llu | %8.1lf |", Stats::run++, curConflict, Stats::nbDecisions, InfoSystem::elapsed_seconds());
+                fprintf(stderr, "c | %6llu | %7d | %8llu | %8.1lf |", Stats::run, curConflict, Stats::nbDecisions, InfoSystem::elapsed_seconds());
 
             rst.Inc();
             curConflict = 0;
             cspAC->cancelUntil(0);
-
             manager->restart(nogoodStackVariable, propagateStackVariable);
 
             for (size_t i = 0, stop = vecVar.size(); i < stop; ++i)

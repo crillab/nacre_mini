@@ -138,7 +138,7 @@ int LecoutreCompleteSolver::search(int zeroing)
                     /* if (var->useless)
                         cout << "* ";
                     else */
-                        cout << var->getVarPropFromLocalDomInd(0).val << " ";
+                    cout << var->getVarPropFromLocalDomInd(0).val << " ";
                 }
                 cout << "</values> </instantiation>" << endl
                      << endl;

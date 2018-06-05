@@ -55,7 +55,7 @@ public:
     {
         auto seed = time(0);
         if (Options::Verbose != verbose::no)
-            std::cerr << "c seed : " << seed << std::endl;
+            std::cout << "c seed : " << seed << std::endl;
         srand(seed);
     };
 
@@ -64,7 +64,7 @@ public:
     {
         auto seed = time(0);
         if (Options::Verbose != verbose::no)
-            std::cerr << "c seed : " << seed << std::endl;
+            std::cout << "c seed : " << seed << std::endl;
         srand(seed);
     };
 

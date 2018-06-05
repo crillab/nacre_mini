@@ -13,7 +13,7 @@ CSP MiniTrack.
 
 Go to the *core* folder and use the following line:
 
-    ./make install
+    ./make
 
 You can add `-j` for parallel compilation. It will compile both the parser and solver.
 
@@ -30,9 +30,12 @@ Even for default configuration you need to specify the resolution method. In NAC
 * ``-nld``: Negative last-decision nogoods (Recording and minimizing nogoods from restarts, Christophe Lecoutre, Lakhdar Sais, Sébastien Tabary, Vincent Vidal, 2007)
 * ``-ca``: Conflict analysis, SAT-based lazy explanations
 
-
 ## Acknowledgements
 
-This work has been supported by the project CPER Data from the region ”Hauts-de-France”.
-This solver is produced for my PhD thesis work on data structures designed for clause-based nogood recording.
+This work has been supported by the project CPER Data from the region ”
+Hauts-de-France”.
+
+This solver is produced for my (Gaël Glorian) PhD thesis work on data structures
+designed for clause-based nogood recording.
+
 A big thank-you to Gilles Audemard, for his support and help.

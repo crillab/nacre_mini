@@ -12,11 +12,11 @@ DEP 	  := $(COBJS:%.o=%.d)
 CFLAGS     = `xml2-config --cflags` -I../XCSP3-CPP-Parser-master/include $(addprefix -I, $(shell find . -type d))
 LDFLAGS    = `xml2-config --libs` -L../XCSP3-CPP-Parser-master/lib/ -lparserxcsp3core -lm
 
-.PHONY: s p install
+.PHONY: s p r all
+all: lib $(EXEC)_release
 s:      $(EXEC)
 p:      $(EXEC)_profile
 r:      $(EXEC)_release
-install: lib $(EXEC)_release
 
 $(EXEC): CXX = g++ -std=c++14 -Wall -Wfatal-errors -O3 -g
 $(EXEC)_profile: CXX = g++ -std=c++14 -Wall -Wfatal-errors -O2 -g -pg -fprofile-arcs -ftest-coverage
@@ -38,8 +38,7 @@ fclean: clean
 ## Lib maker
 .PHONY: lib
 lib:
-	@make -C ../XCSP3-CPP-Parser-master/samples/ clean
-	@make -C ../XCSP3-CPP-Parser-master/samples/ lib -j
+	@make -C ../XCSP3-CPP-Parser-master/samples/ lib
 
 # Link the executable
 $(EXEC) : $(COBJS)

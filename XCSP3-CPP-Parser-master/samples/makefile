@@ -16,7 +16,7 @@ all: main.cc $(OBJ_FILES)
 
 lib: $(OBJ_FILES) 
 	@mkdir -p ../lib
-	ar rcsv ../lib/libparserxcsp3core.a $(OBJ_FILES)
+	@ar rcsv ../lib/libparserxcsp3core.a $(OBJ_FILES)
 
 testlib: main.cc
 	$(CXX)  $(CFLAGS) $(INC) -o testlib main.cc -L ../lib $(LIBS) -lparserxcsp3core

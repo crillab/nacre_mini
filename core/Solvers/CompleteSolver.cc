@@ -80,15 +80,13 @@ int CompleteSolver::search(int zeroing)
         } else if (curConflict >= rst.GetNbConflictAllowed()) { // restart
             propagateStackVariable.clear();
 
-            rst.Inc();
-
             if (Options::Verbose != verbose::no)
                 fprintf(stderr, "c | %6llu | %7d | %8llu | %7.1lf | %10.3lf |\n",
-                    Stats::run++, curConflict, Stats::nbDecisions, InfoSystem::elapsed_seconds(), (double)InfoSystem::getMemUsed() / 1000);
+                    Stats::run, curConflict, Stats::nbDecisions, InfoSystem::elapsed_seconds(), (double)InfoSystem::getMemUsed() / 1000);
+
+            rst.Inc();
             curConflict = 0;
-
             cspAC->cancelUntil(zeroing);
-
         } else { // new decision level
             if (v && v->isAssigned())
                 v->lastPushed = false;

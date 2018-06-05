@@ -86,11 +86,9 @@ int IncNGCompleteSolver::search(int zeroing)
             if (Options::Verbose != verbose::no)
                 fprintf(stderr, "c | %6llu | %7d | %8llu | %8.1lf |", Stats::run, curConflict, Stats::nbDecisions, InfoSystem::elapsed_seconds());
 
-            Stats::run++;
             rst.Inc();
             curConflict = 0;
             cspAC->cancelUntil(0);
-
             manager->restart(nogoodStackVariable, propagateStackVariable);
 
             for (size_t i = 0, stop = vecVar.size(); i < stop; ++i)

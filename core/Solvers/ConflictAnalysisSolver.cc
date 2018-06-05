@@ -80,7 +80,7 @@ int ConflictAnalysisSolver::search(int zeroing)
 
             if (learnt_clause.size() == 1)
                 Stats::unit++;
-                
+
             if ((learnt_clause[0] & 1))
                 vp.toVar->removeAt(vp.posInVar, AChandler->getDecisionLevel(), ref);
             else
@@ -94,7 +94,7 @@ int ConflictAnalysisSolver::search(int zeroing)
         } else if (curConflict >= rst.GetNbConflictAllowed()) { // restart
             if (Options::Verbose != verbose::no)
                 fprintf(stderr, "c | %6llu | %7d | %8llu | %8.1lf | %8llu | %10llu |\n",
-                    Stats::run++, curConflict, Stats::nbDecisions, InfoSystem::elapsed_seconds(), Stats::nbNoGoods, Stats::unit);
+                    Stats::run, curConflict, Stats::nbDecisions, InfoSystem::elapsed_seconds(), Stats::nbNoGoods, Stats::unit);
 
             rst.Inc();
             curConflict = 0;

@@ -33,6 +33,7 @@
 
 void Restart::Inc()
 {
+    Stats::run++;
     /* Variable::gblOrder = 0; */
     nbRst++;
     switch (Options::optRst) {
