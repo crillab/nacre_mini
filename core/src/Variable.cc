@@ -53,14 +53,14 @@ void Expl::lock(Constraint* c, int lvl, unsigned long long ord)
     ctr = c;
     level = lvl;
     order = ord;
-    if (c && (unsigned)c->getId() >= Stats::saveNbConstraints)
+    if (c && dynamic_cast<RefClause*>(c) != NULL)
         static_cast<RefClause*>(c)->isReason++;
 }
 
 void Expl::unlock()
 {
     assert(level != -1);
-    if (ctr && (unsigned)ctr->getId() >= Stats::saveNbConstraints)
+    if (ctr && dynamic_cast<RefClause*>(ctr) != NULL)
         static_cast<RefClause*>(ctr)->isReason--;
     ctr = nullptr;
     level = -1;
