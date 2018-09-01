@@ -7,7 +7,7 @@ to experiment nogood recording (with a clause reasoning engine) in Constraint
 Programming (CP). In particular, the data structures of the solver have been
 carefully designed to play around nogoods and clauses. This is the first version
 of the solver and it has been submitted to the XCSP3 2018 competition under the
-CSP MiniTrack.
+CSP MiniTrack. NACRE took first place!
 
 ## Usage
 
