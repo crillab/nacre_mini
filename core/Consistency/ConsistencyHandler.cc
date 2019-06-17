@@ -50,7 +50,7 @@ using namespace std;
 
 bool ConsistencyHandler::init()
 {
-    cout << "c NACRE 1.0.4" << endl;
+    cout << "c NACRE 1.0.5" << endl;
 
     cleanQueue();
 

@@ -332,7 +332,7 @@ bool Variable::keepOnlyValues(Variable* var, int k, int level, Constraint* ctr)
 
     for (int i = 0, stop = var->domainCurSize; i < stop; ++i) {
         int val = var->getVarPropFromLocalDomInd(i).val + k;
-        if (val < getLowerBoundVal() && val > getUpperBoundVal())
+        if (val < getLowerBoundVal() || val > getUpperBoundVal())
             continue;
         for (int i = 0; i < domainCurSize; ++i)
             if (getVarPropFromLocalDomInd(i).val == val) {
